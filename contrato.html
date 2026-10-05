@@ -54,15 +54,18 @@
       verificar('carrito:actualizado.version es "1.0"', ultimo && ultimo.version === '1.0');
       verificar('carrito:actualizado trae cantidad = 2 y total = 12500', ultimo && ultimo.cantidad === 2 && ultimo.total === 12500);
 
-      // 5. pedido:confirmado v1.0 { version, id, fecha, items, total }
+      // 5. pedido:confirmado v1.1 { version, id, fecha, items, total, metodoPago }
+      el.shadowRoot.querySelector('select[name="pago"]').value = 'Nequi';
+      el.shadowRoot.querySelector('select[name="pago"]').dispatchEvent(new Event('change', { bubbles: true }));
       el.shadowRoot.querySelector('.confirmar').click();
       const pedido = confirmados[0];
       verificar('publica pedido:confirmado al confirmar', !!pedido);
-      verificar('pedido:confirmado.version es "1.0"', pedido && pedido.version === '1.0');
+      verificar('pedido:confirmado.version es "1.1"', pedido && pedido.version === '1.1');
       verificar('trae id y fecha ISO', pedido && typeof pedido.id === 'string' && !isNaN(Date.parse(pedido.fecha)));
       verificar('trae items con { id, nombre, precio, cantidad }', pedido && Array.isArray(pedido.items) && pedido.items.length === 2 &&
         pedido.items.every(it => typeof it.id === 'number' && typeof it.nombre === 'string' && typeof it.precio === 'number' && typeof it.cantidad === 'number'));
       verificar('trae total = 12500', pedido && pedido.total === 12500);
+      verificar('v1.1: trae metodoPago = "Nequi"', pedido && pedido.metodoPago === 'Nequi');
       verificar('al confirmar el carrito se vacía (cantidad 0)', actualizados[actualizados.length - 1].cantidad === 0);
 
       // 6. Desmontaje limpio
