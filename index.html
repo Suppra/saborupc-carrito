@@ -6,24 +6,29 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; background: #fafafa; }
     .banda { background: #fff3c4; padding: 8px 12px; margin-bottom: 16px; font-size: 13px; }
+    #eventos { font-family: monospace; font-size: 13px; }
   </style>
 </head>
 <body>
   <div class="banda">
-    Modo independiente: simulamos el evento del catálogo con estos botones.
+    Modo independiente del equipo Pedidos: simulamos el evento del catálogo.
     <button onclick="simular(101, 'Plato de prueba A', 10000)">Simular plato A</button>
     <button onclick="simular(102, 'Plato de prueba B', 2500)">Simular plato B</button>
+    · <a href="contrato.html">prueba de contrato</a>
   </div>
   <mfe-carrito></mfe-carrito>
-  <p id="estado"></p>
+  <h3>Eventos publicados</h3>
+  <ul id="eventos"></ul>
 
   <script src="carrito.js"></script>
   <script>
     function simular(id, nombre, precio) {
-      window.dispatchEvent(new CustomEvent('carrito:agregar', { detail: { id, nombre, precio } }));
+      window.dispatchEvent(new CustomEvent('carrito:agregar', { detail: { version: '1.0', id, nombre, precio } }));
     }
-    window.addEventListener('carrito:actualizado', function (e) {
-      document.getElementById('estado').textContent = 'carrito:actualizado → ' + JSON.stringify(e.detail);
+    ['carrito:actualizado', 'pedido:confirmado'].forEach(function (nombre) {
+      window.addEventListener(nombre, function (e) {
+        document.getElementById('eventos').insertAdjacentHTML('beforeend', '<li>' + nombre + ' → ' + JSON.stringify(e.detail) + '</li>');
+      });
     });
   </script>
 </body>
