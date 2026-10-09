@@ -25,7 +25,7 @@
     .version { font-size: var(--sabor-texto-xs, 12px); color: var(--sabor-color-texto-suave, #777); }
     table { width: 100%; border-collapse: collapse; margin: var(--sabor-espacio-4, 16px) 0; background: var(--sabor-color-superficie, #fff); }
     th, td { padding: 10px; border-bottom: 1px solid var(--sabor-color-borde, #dde3ea); text-align: left; }
-    th { background: #eaf3fb; }
+    th { background: var(--sabor-color-fondo, #eaf3fb); }
     .quitar { background: none; border: 1px solid var(--sabor-color-peligro, #c0392b); color: var(--sabor-color-peligro, #c0392b);
               border-radius: var(--sabor-radio, 4px); cursor: pointer; padding: 4px 8px; font: inherit; }
     .pie { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: var(--sabor-espacio-4, 16px); }
